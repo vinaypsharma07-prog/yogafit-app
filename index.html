@@ -1,53 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>YogaFit App</title>
+  <title>YogaFit Pro</title>
   <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-
 <body>
 
-<div class="app">
+<div class="container" id="loginBox">
+  <h2>YogaFit Pro Login</h2>
+  <input id="username" placeholder="Enter name">
+  <button onclick="login()">Login</button>
+</div>
 
-  <header>
-    <h1>YogaFit</h1>
-    <p>Your Digital Yoga Startup</p>
-  </header>
+<div class="container hidden" id="appBox">
 
-  <div class="card">
-    <h2>Login</h2>
-    <input id="username" placeholder="Enter your name">
-    <button onclick="login()">Login</button>
-    <p id="welcome"></p>
-  </div>
+  <h1>YogaFit Pro</h1>
+  <p id="welcome"></p>
+  <button onclick="logout()">Logout</button>
 
   <div class="card">
-    <h2>Yoga Poses</h2>
-    <ul id="poseList"></ul>
-  </div>
-
-  <div class="card">
-    <h2>BMI Calculator</h2>
+    <h3>BMI Calculator</h3>
     <input id="weight" placeholder="Weight (kg)">
     <input id="height" placeholder="Height (cm)">
-    <button onclick="calcBMI()">Calculate</button>
+    <button onclick="calculateBMI()">Calculate</button>
     <p id="bmiResult"></p>
   </div>
 
   <div class="card">
-    <h2>Yoga Timer</h2>
+    <h3>Yoga Timer</h3>
     <input id="minutes" placeholder="Minutes">
     <button onclick="startTimer()">Start</button>
-    <p id="timer"></p>
+    <p id="timerDisplay"></p>
   </div>
 
   <div class="card">
-    <h2>Diet Plan</h2>
+    <h3>Yoga Poses</h3>
+    <ul id="poseList"></ul>
+  </div>
+
+  <div class="card">
+    <h3>Diet Plan</h3>
     <ul>
-      <li>🌅 Morning: Fruits + Water</li>
-      <li>🥗 Lunch: Roti + Sabzi</li>
-      <li>🍲 Dinner: Soup + Salad</li>
+      <li>Breakfast: Fruits + Oats</li>
+      <li>Lunch: Roti + Dal + Sabzi</li>
+      <li>Dinner: Soup + Salad</li>
     </ul>
+  </div>
+
+  <div class="card">
+    <h3>Video Class</h3>
+    <iframe width="100%" height="200"
+      src="https://www.youtube.com/embed/v7AYKMP6rOE"
+      allowfullscreen></iframe>
   </div>
 
 </div>
