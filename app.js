@@ -1,63 +1,65 @@
-// LOGIN
-function loginUser() {
-  let username = document.getElementById("username").value;
-  if (username === "") {
-    alert("Enter username");
-    return;
-  }
-  localStorage.setItem("user", username);
-  document.getElementById("welcomeUser").innerText = "Welcome " + username;
-}
-
-// LOAD USER
-window.onload = function () {
-  let user = localStorage.getItem("user");
-  if (user) {
-    document.getElementById("welcomeUser").innerText = "Welcome " + user;
-  }
-};
-
-// YOGA POSES
 let poses = [
-  { name: "Surya Namaskar", benefit: "Full body workout" },
-  { name: "Vrikshasana", benefit: "Balance & focus" },
-  { name: "Bhujangasana", benefit: "Spine strength" },
-  { name: "Padmasana", benefit: "Meditation posture" }
+  "Surya Namaskar – Full body workout",
+  "Vrikshasana – Balance & focus",
+  "Bhujangasana – Spine strength",
+  "Padmasana – Meditation posture"
 ];
 
-let poseList = document.getElementById("poseList");
-poses.forEach(p => {
-  let li = document.createElement("li");
-  li.innerText = p.name + " - " + p.benefit;
-  poseList.appendChild(li);
-});
+function login() {
+  let name = document.getElementById("username").value;
+  if(name=="") return alert("Enter name");
 
-// BMI
+  localStorage.setItem("user", name);
+  loadApp();
+}
+
+function logout() {
+  localStorage.removeItem("user");
+  location.reload();
+}
+
+function loadApp() {
+  let user = localStorage.getItem("user");
+  if(user){
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("appBox").classList.remove("hidden");
+    document.getElementById("welcome").innerText = "Welcome " + user;
+
+    let list = document.getElementById("poseList");
+    poses.forEach(p=>{
+      let li = document.createElement("li");
+      li.innerText = p;
+      list.appendChild(li);
+    });
+  }
+}
+
 function calculateBMI() {
-  let weight = document.getElementById("weight").value;
-  let height = document.getElementById("height").value;
+  let w = weight.value;
+  let h = height.value / 100;
+  let bmi = (w / (h*h)).toFixed(2);
 
-  let bmi = (weight / ((height / 100) * (height / 100))).toFixed(2);
-  document.getElementById("bmiResult").innerText = "Your BMI: " + bmi;
+  let result = "BMI: " + bmi;
+  if(bmi < 18) result += " (Underweight)";
+  else if(bmi < 25) result += " (Normal)";
+  else result += " (Overweight)";
+
+  bmiResult.innerText = result;
 }
 
-// TIMER
 function startTimer() {
-  let minutes = document.getElementById("minutes").value;
-  let seconds = minutes * 60;
+  let min = minutes.value;
+  let sec = min * 60;
 
-  let timer = setInterval(() => {
-    let min = Math.floor(seconds / 60);
-    let sec = seconds % 60;
+  let timer = setInterval(()=>{
+    sec--;
+    timerDisplay.innerText = "Time left: " + sec + " sec";
 
-    document.getElementById("timerDisplay").innerText =
-      min + ":" + (sec < 10 ? "0" : "") + sec;
-
-    if (seconds <= 0) {
+    if(sec <= 0){
       clearInterval(timer);
-      alert("Yoga Session Complete!");
+      alert("Yoga Session Completed!");
     }
-
-    seconds--;
-  }, 1000);
+  },1000);
 }
+
+window.onload = loadApp;
