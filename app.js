@@ -1,39 +1,63 @@
+// LOGIN
+function loginUser() {
+  let username = document.getElementById("username").value;
+  if (username === "") {
+    alert("Enter username");
+    return;
+  }
+  localStorage.setItem("user", username);
+  document.getElementById("welcomeUser").innerText = "Welcome " + username;
+}
+
+// LOAD USER
+window.onload = function () {
+  let user = localStorage.getItem("user");
+  if (user) {
+    document.getElementById("welcomeUser").innerText = "Welcome " + user;
+  }
+};
+
+// YOGA POSES
 let poses = [
-  { name: "Surya Namaskar", benefits: "Full body workout" },
-  { name: "Vrikshasana", benefits: "Balance & focus" },
-  { name: "Bhujangasana", benefits: "Spine strength" },
-  { name: "Padmasana", benefits: "Meditation posture" }
+  { name: "Surya Namaskar", benefit: "Full body workout" },
+  { name: "Vrikshasana", benefit: "Balance & focus" },
+  { name: "Bhujangasana", benefit: "Spine strength" },
+  { name: "Padmasana", benefit: "Meditation posture" }
 ];
 
 let poseList = document.getElementById("poseList");
-
-poses.forEach(pose => {
+poses.forEach(p => {
   let li = document.createElement("li");
-  li.innerText = pose.name + " - " + pose.benefits;
+  li.innerText = p.name + " - " + p.benefit;
   poseList.appendChild(li);
 });
 
-function login() {
-  let name = document.getElementById("username").value;
-  document.getElementById("welcome").innerText = "Welcome " + name + " 🙏";
-}
+// BMI
+function calculateBMI() {
+  let weight = document.getElementById("weight").value;
+  let height = document.getElementById("height").value;
 
-function calcBMI() {
-  let w = document.getElementById("weight").value;
-  let h = document.getElementById("height").value / 100;
-  let bmi = (w / (h * h)).toFixed(2);
+  let bmi = (weight / ((height / 100) * (height / 100))).toFixed(2);
   document.getElementById("bmiResult").innerText = "Your BMI: " + bmi;
 }
 
+// TIMER
 function startTimer() {
-  let min = document.getElementById("minutes").value;
-  let sec = min * 60;
+  let minutes = document.getElementById("minutes").value;
+  let seconds = minutes * 60;
+
   let timer = setInterval(() => {
-    sec--;
-    document.getElementById("timer").innerText = "Time left: " + sec + " sec";
-    if (sec <= 0) {
+    let min = Math.floor(seconds / 60);
+    let sec = seconds % 60;
+
+    document.getElementById("timerDisplay").innerText =
+      min + ":" + (sec < 10 ? "0" : "") + sec;
+
+    if (seconds <= 0) {
       clearInterval(timer);
       alert("Yoga Session Complete!");
     }
+
+    seconds--;
   }, 1000);
 }
