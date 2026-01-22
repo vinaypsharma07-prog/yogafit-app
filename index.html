@@ -1,36 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>YogaFit App</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>YogaFit App</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header class="header">
-    <h1>YogaFit</h1>
-    <p>Your Daily Yoga Partner</p>
+<header>
+  <h1>YogaFit</h1>
+  <p>Your Daily Yoga Partner</p>
 </header>
 
 <div class="container">
-    <div class="card">
-        <h2>Morning Yoga</h2>
-        <p>Start your day with energy</p>
-        <button onclick="startSession('Morning Yoga')">Start Session</button>
-    </div>
 
-    <div class="card">
-        <h2>Meditation</h2>
-        <p>Relax your mind</p>
-        <button onclick="startSession('Meditation')">Start Meditation</button>
-    </div>
+  <div class="card">
+    <h2>Morning Yoga</h2>
+    <p>Start your day with energy</p>
+    <button onclick="startYoga()">Start Session</button>
+  </div>
+
+  <div class="card">
+    <h2>Meditation</h2>
+    <p>Relax your mind</p>
+    <button onclick="startMeditation()">Start Meditation</button>
+  </div>
+
+  <div class="card">
+    <h2>Yoga Poses</h2>
+    <ul id="yogaList"></ul>
+  </div>
+
 </div>
 
-<div id="sessionBox" class="session-box"></div>
-
 <footer>
-    <p>© 2026 YogaFit App | Stay Healthy, Stay Fit</p>
+  <p>© 2026 YogaFit App | Stay Healthy, Stay Fit</p>
 </footer>
 
 <script src="yoga-data.js"></script>
