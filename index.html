@@ -1,56 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>YogaFit App</title>
-
-  <!-- Mobile Friendly -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="manifest.json">
-
-  <!-- Theme Color -->
-  <meta name="theme-color" content="#4CAF50">
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>YogaFit App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <!-- Header -->
-  <div class="header">
+<header class="header">
     <h1>YogaFit</h1>
     <p>Your Daily Yoga Partner</p>
-  </div>
+</header>
 
-  <!-- Main Content -->
-  <div class="container">
-
-    <!-- Morning Yoga Card -->
+<div class="container">
     <div class="card">
-      <h2>Morning Yoga</h2>
-      <p>Start your day with energy</p>
-      <button onclick="startYoga()">Start Session</button>
+        <h2>Morning Yoga</h2>
+        <p>Start your day with energy</p>
+        <button onclick="startSession('Morning Yoga')">Start Session</button>
     </div>
 
-    <!-- Meditation Card -->
     <div class="card">
-      <h2>Meditation</h2>
-      <p>Relax your mind</p>
-      <button onclick="startMeditation()">Start Meditation</button>
+        <h2>Meditation</h2>
+        <p>Relax your mind</p>
+        <button onclick="startSession('Meditation')">Start Meditation</button>
     </div>
+</div>
 
-  </div>
+<div id="sessionBox" class="session-box"></div>
 
-  <!-- Footer -->
-  <div class="footer">
+<footer>
     <p>© 2026 YogaFit App | Stay Healthy, Stay Fit</p>
-  </div>
+</footer>
 
-  <!-- JS -->
-  <script src="app.js"></script>
+<script src="yoga-data.js"></script>
+<script src="app.js"></script>
 
 </body>
 </html>
