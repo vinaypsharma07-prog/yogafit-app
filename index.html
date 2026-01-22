@@ -3,43 +3,106 @@
 <head>
   <meta charset="UTF-8">
   <title>YogaFit App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+
+<!-- LOGIN -->
+<div id="loginBox" class="login-box">
+  <h2>YogaFit Login</h2>
+  <input type="text" id="loginName" placeholder="Enter your name">
+  <button onclick="loginUser()">Login</button>
+</div>
+
+<!-- MAIN APP -->
+<div id="appBox" style="display:none;">
 
 <header>
   <h1>YogaFit</h1>
-  <p>Your Daily Yoga Partner</p>
+  <p>Your Digital Yoga Startup</p>
+  <button class="logout-btn" onclick="logoutUser()">Logout</button>
 </header>
 
 <div class="container">
 
+  <!-- Language -->
   <div class="card">
-    <h2>Morning Yoga</h2>
-    <p>Start your day with energy</p>
-    <button onclick="startYoga()">Start Session</button>
+    <h2>Language / भाषा</h2>
+    <button onclick="setLang('en')">English</button>
+    <button onclick="setLang('hi')">Hindi</button>
   </div>
 
+  <!-- Profile -->
   <div class="card">
-    <h2>Meditation</h2>
-    <p>Relax your mind</p>
-    <button onclick="startMeditation()">Start Meditation</button>
+    <h2>Profile</h2>
+    <p id="profileName"></p>
   </div>
 
+  <!-- Yoga Poses -->
   <div class="card">
-    <h2>Yoga Poses</h2>
+    <h2 id="poseTitle">Yoga Poses</h2>
     <ul id="yogaList"></ul>
+  </div>
+
+  <!-- Videos -->
+  <div class="card">
+    <h2>Yoga Video Classes</h2>
+    <iframe width="100%" height="200"
+      src="https://www.youtube.com/embed/v7AYKMP6rOE"
+      allowfullscreen></iframe>
+  </div>
+
+  <!-- Timer -->
+  <div class="card">
+    <h2>Yoga Timer</h2>
+    <input type="number" id="minutes" placeholder="Enter minutes">
+    <button onclick="startTimer()">Start Timer</button>
+    <p id="timerResult"></p>
+  </div>
+
+  <!-- BMI -->
+  <div class="card">
+    <h2>BMI Calculator</h2>
+    <input type="number" id="weight" placeholder="Weight (kg)">
+    <input type="number" id="height" placeholder="Height (cm)">
+    <button onclick="calculateBMI()">Calculate BMI</button>
+    <p id="bmiResult"></p>
+  </div>
+
+  <!-- Diet -->
+  <div class="card">
+    <h2>Diet Plans</h2>
+    <ul>
+      <li>Weight Loss: Fruits, salad, green tea</li>
+      <li>Weight Gain: Milk, banana, nuts</li>
+      <li>Healthy Life: Balanced diet + yoga</li>
+    </ul>
+  </div>
+
+  <!-- Progress -->
+  <div class="card">
+    <h2>Progress</h2>
+    <button onclick="markDone()">Mark Today Done</button>
+    <p id="progressResult"></p>
+  </div>
+
+  <!-- ADMIN -->
+  <div class="card">
+    <h2>Admin Panel</h2>
+    <input type="text" id="newPose" placeholder="New Yoga Pose">
+    <button onclick="addPose()">Add Pose</button>
   </div>
 
 </div>
 
 <footer>
-  <p>© 2026 YogaFit App | Stay Healthy, Stay Fit</p>
+  <p>© 2026 YogaFit – Digital Wellness Startup</p>
 </footer>
+
+</div>
 
 <script src="yoga-data.js"></script>
 <script src="app.js"></script>
-
 </body>
 </html>
