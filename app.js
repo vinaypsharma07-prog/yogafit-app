@@ -5,9 +5,25 @@ let poses = [
   "Padmasana – Meditation posture"
 ];
 
+const loginBox = document.getElementById("loginBox");
+const appBox = document.getElementById("appBox");
+
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const bmiBtn = document.getElementById("bmiBtn");
+const timerBtn = document.getElementById("timerBtn");
+
+const welcome = document.getElementById("welcome");
+const poseList = document.getElementById("poseList");
+
+loginBtn.addEventListener("click", login);
+logoutBtn.addEventListener("click", logout);
+bmiBtn.addEventListener("click", calculateBMI);
+timerBtn.addEventListener("click", startTimer);
+
 function login() {
   let name = document.getElementById("username").value;
-  if(name=="") return alert("Enter name");
+  if(name === "") return alert("Enter name");
 
   localStorage.setItem("user", name);
   loadApp();
@@ -21,39 +37,34 @@ function logout() {
 function loadApp() {
   let user = localStorage.getItem("user");
   if(user){
-    document.getElementById("loginBox").classList.add("hidden");
-    document.getElementById("appBox").classList.remove("hidden");
-    document.getElementById("welcome").innerText = "Welcome " + user;
+    loginBox.classList.add("hidden");
+    appBox.classList.remove("hidden");
+    welcome.innerText = "Welcome " + user;
 
-    let list = document.getElementById("poseList");
+    poseList.innerHTML = "";
     poses.forEach(p=>{
       let li = document.createElement("li");
       li.innerText = p;
-      list.appendChild(li);
+      poseList.appendChild(li);
     });
   }
 }
 
 function calculateBMI() {
-  let w = weight.value;
-  let h = height.value / 100;
+  let w = document.getElementById("weight").value;
+  let h = document.getElementById("height").value / 100;
   let bmi = (w / (h*h)).toFixed(2);
 
-  let result = "BMI: " + bmi;
-  if(bmi < 18) result += " (Underweight)";
-  else if(bmi < 25) result += " (Normal)";
-  else result += " (Overweight)";
-
-  bmiResult.innerText = result;
+  document.getElementById("bmiResult").innerText = "Your BMI: " + bmi;
 }
 
 function startTimer() {
-  let min = minutes.value;
+  let min = document.getElementById("minutes").value;
   let sec = min * 60;
 
   let timer = setInterval(()=>{
     sec--;
-    timerDisplay.innerText = "Time left: " + sec + " sec";
+    document.getElementById("timerDisplay").innerText = "Time left: " + sec + " sec";
 
     if(sec <= 0){
       clearInterval(timer);
