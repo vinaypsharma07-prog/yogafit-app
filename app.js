@@ -1,23 +1,19 @@
-// Yoga Session Start
-function startYoga() {
-  alert("🧘 Morning Yoga Session Started!\n\nTake a deep breath and begin your practice.");
-}
+window.onload = function () {
+  const list = document.getElementById("yogaList");
 
-// Meditation Session Start
-function startMeditation() {
-  alert("🧘‍♂️ Meditation Session Started!\n\nRelax your mind and focus on your breathing.");
-}
-
-// PWA Service Worker Registration
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function () {
-    navigator.serviceWorker
-      .register("sw.js")
-      .then(function () {
-        console.log("Service Worker Registered Successfully");
-      })
-      .catch(function (error) {
-        console.log("Service Worker Registration Failed:", error);
-      });
+  yogaData.forEach(yoga => {
+    const item = document.createElement("li");
+    item.innerHTML = `<strong>${yoga.name}</strong><br>
+                      Duration: ${yoga.duration}<br>
+                      Benefits: ${yoga.benefits}<br><br>`;
+    list.appendChild(item);
   });
+};
+
+function startYoga() {
+  alert("Morning Yoga Session Started!");
+}
+
+function startMeditation() {
+  alert("Meditation Session Started. Relax and breathe.");
 }
