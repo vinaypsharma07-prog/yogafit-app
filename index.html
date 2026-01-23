@@ -1,45 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>YogaFit Pro</title>
-  <link rel="stylesheet" href="style.css">
+  <title>YogaFit Flow</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container" id="loginBox">
-  <h2>YogaFit Login</h2>
-  <input id="username" placeholder="Enter your name">
-  <button id="loginBtn">Login</button>
-</div>
+<!-- SCREEN: LOGIN / REGISTER -->
+<section id="screenLogin" class="screen">
+  <h2>YogaFit</h2>
+  <input id="name" placeholder="Name">
+  <input id="age" placeholder="Age" type="number">
+  <input id="weight" placeholder="Weight (kg)" type="number">
+  <input id="height" placeholder="Height (cm)" type="number">
+  <button onclick="saveUser()">Continue</button>
+</section>
 
-<div class="container hidden" id="appBox">
+<!-- SCREEN: GOAL -->
+<section id="screenGoal" class="screen hidden">
+  <h2>Select Your Goal</h2>
+  <button onclick="selectGoal('Weight Loss')">Weight Loss</button>
+  <button onclick="selectGoal('Fitness')">Fitness</button>
+  <button onclick="selectGoal('Stress Relief')">Stress Relief</button>
+</section>
 
+<!-- SCREEN: ROUTINE -->
+<section id="screenRoutine" class="screen hidden">
+  <h2>Choose Routine</h2>
+  <button onclick="selectRoutine('Morning')">Morning Yoga</button>
+  <button onclick="selectRoutine('Evening')">Evening Yoga</button>
+</section>
+
+<!-- SCREEN: PLAN -->
+<section id="screenPlan" class="screen hidden">
+  <h2>Your Personalized Plan</h2>
+  <ul id="planList"></ul>
+  <button onclick="goDashboard()">Go to Dashboard</button>
+</section>
+
+<!-- SCREEN: DASHBOARD -->
+<section id="screenDashboard" class="screen hidden">
   <h2 id="welcome"></h2>
-  <button id="logoutBtn">Logout</button>
 
   <div class="card">
-    <h3>BMI Calculator</h3>
-    <input id="weight" placeholder="Weight (kg)">
-    <input id="height" placeholder="Height (cm)">
-    <button id="bmiBtn">Calculate BMI</button>
-    <p id="bmiResult"></p>
+    <h3>Today’s Yoga</h3>
+    <ul id="poseList"></ul>
+  </div>
+
+  <div class="card">
+    <h3>Video Class</h3>
+    <iframe width="100%" height="200"
+      src="https://www.youtube.com/embed/v7AYKMP6rOE"
+      allowfullscreen></iframe>
   </div>
 
   <div class="card">
     <h3>Yoga Timer</h3>
     <input id="minutes" placeholder="Minutes">
-    <button id="timerBtn">Start Timer</button>
+    <button onclick="startTimer()">Start</button>
     <p id="timerDisplay"></p>
   </div>
 
   <div class="card">
-    <h3>Yoga Poses</h3>
-    <ul id="poseList"></ul>
+    <h3>BMI</h3>
+    <button onclick="showBMI()">Calculate BMI</button>
+    <p id="bmiResult"></p>
   </div>
 
-</div>
+  <div class="card">
+    <h3>Diet Plan</h3>
+    <ul>
+      <li>Breakfast: Fruits + Oats</li>
+      <li>Lunch: Roti + Dal + Sabzi</li>
+      <li>Dinner: Soup + Salad</li>
+    </ul>
+  </div>
 
+  <div class="card">
+    <h3>Progress</h3>
+    <button onclick="markDone()">Mark Today Completed</button>
+    <p id="progress"></p>
+  </div>
+
+  <div class="card">
+    <h3>Yoga Alarm (Phone Timezone)</h3>
+    <button onclick="setMorningAlarm()">Morning Alarm (06:00)</button>
+    <button onclick="setEveningAlarm()">Evening Alarm (18:00)</button>
+    <button onclick="setOnePMAlarm()">Daily Reminder (13:00)</button>
+  </div>
+
+  <button class="logout" onclick="resetApp()">Logout</button>
+</section>
+
+<script src="data.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
