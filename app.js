@@ -1,155 +1,114 @@
-// State
-let user = JSON.parse(localStorage.getItem("yogafit_user")) || {};
+// Screens
+const login = document.getElementById("login");
+const goal = document.getElementById("goal");
+const routine = document.getElementById("routine");
+const plan = document.getElementById("plan");
+const dashboard = document.getElementById("dashboard");
+
+// Data
+let user = {};
 let selectedGoal = "";
 let selectedRoutine = "";
-let currentPlan = [];
+let poses = [];
 
-// Screens
-const sLogin = id("screenLogin");
-const sGoal = id("screenGoal");
-const sRoutine = id("screenRoutine");
-const sPlan = id("screenPlan");
-const sDash = id("screenDashboard");
+// Utils
+function show(screen){
+  [login,goal,routine,plan,dashboard].forEach(s=>s.classList.add("hidden"));
+  screen.classList.remove("hidden");
+}
 
-function id(x){ return document.getElementById(x); }
-
-// Start
-window.onload = () => {
-  if(user.name){
-    selectedGoal = user.goal;
-    selectedRoutine = user.routine;
-    currentPlan = user.plan || [];
-    showDashboard();
-  }
-};
-
-// Step 1: Save user
+// Step 1
 function saveUser(){
   user = {
-    name: id("name").value,
-    age: id("age").value,
-    weight: id("weight").value,
-    height: id("height").value
+    name: name.value,
+    age: age.value,
+    weight: weight.value,
+    height: height.value
   };
   if(!user.name) return alert("Enter name");
-  localStorage.setItem("yogafit_user", JSON.stringify(user));
-  show(sGoal);
+  localStorage.setItem("user",JSON.stringify(user));
+  show(goal);
 }
 
-// Step 2: Goal
-function selectGoal(goal){
-  selectedGoal = goal;
-  show(sRoutine);
+// Step 2
+function selectGoal(g){
+  selectedGoal = g;
+  show(routine); // ✅ FIX
 }
 
-// Step 3: Routine
+// Step 3
 function selectRoutine(r){
   selectedRoutine = r;
   buildPlan();
-  show(sPlan);
+  show(plan); // ✅ FIX
 }
 
-// Step 4: Build plan
+// Step 4
 function buildPlan(){
-  const key = `${selectedRoutine}_${selectedGoal}`;
-  currentPlan = plans[key] || [];
-  user.goal = selectedGoal;
-  user.routine = selectedRoutine;
-  user.plan = currentPlan;
-  localStorage.setItem("yogafit_user", JSON.stringify(user));
+  poses = [];
+  if(selectedRoutine==="Morning"){
+    poses = ["Surya Namaskar","Bhujangasana","Vrikshasana"];
+  }else{
+    poses = ["Padmasana","Pranayama","Shavasana"];
+  }
 
-  const ul = id("planList"); ul.innerHTML="";
-  currentPlan.forEach(p=>{
-    const li=document.createElement("li");
-    li.innerHTML = `<b>${p.name}</b> – ${p.benefit}`;
-    ul.appendChild(li);
+  planList.innerHTML="";
+  poses.forEach(p=>{
+    let li=document.createElement("li");
+    li.innerText=p;
+    planList.appendChild(li);
   });
 }
 
-// Step 5: Dashboard
-function goDashboard(){ showDashboard(); }
-
-function showDashboard(){
-  show(sDash);
-  id("welcome").innerText = `Welcome ${user.name}`;
-  renderPoses();
-}
-
-function renderPoses(){
-  const ul = id("poseList"); ul.innerHTML="";
-  currentPlan.forEach(p=>{
-    const li=document.createElement("li");
-    li.innerHTML = `
-      <div>
-        <img src="${p.img}" style="width:100%;border-radius:8px">
-        <b>${p.name}</b><br>${p.benefit}
-      </div>`;
-    ul.appendChild(li);
+// Step 5
+function openDashboard(){
+  welcome.innerText="Welcome "+user.name;
+  poseList.innerHTML="";
+  poses.forEach(p=>{
+    let li=document.createElement("li");
+    li.innerText=p;
+    poseList.appendChild(li);
   });
-}
-
-// Utilities
-function show(el){
-  [sLogin,sGoal,sRoutine,sPlan,sDash].forEach(x=>x.classList.add("hidden"));
-  el.classList.remove("hidden");
+  show(dashboard);
 }
 
 // Timer
 function startTimer(){
-  let sec = (id("minutes").value||0)*60;
-  const t = setInterval(()=>{
+  let sec=minutes.value*60;
+  let t=setInterval(()=>{
     sec--;
-    id("timerDisplay").innerText = `Time left: ${sec}s`;
-    if(sec<=0){ clearInterval(t); alert("Session completed"); }
+    timer.innerText=sec+" sec";
+    if(sec<=0){
+      clearInterval(t);
+      alert("Yoga Complete");
+    }
   },1000);
 }
 
 // BMI
 function showBMI(){
-  const w = user.weight, h = user.height/100;
-  const bmi = (w/(h*h)).toFixed(2);
-  id("bmiResult").innerText = `BMI: ${bmi}`;
+  let bmi=(user.weight/((user.height/100)**2)).toFixed(2);
+  bmiEl=bmi;
+  bmi.innerText="BMI: "+bmiEl;
 }
 
-// Progress
-function markDone(){
-  id("progress").innerText = "Completed today";
-}
-
-// Reset
-function resetApp(){
-  localStorage.removeItem("yogafit_user");
-  location.reload();
-}
-
-/* ---------------- ALARM (Timezone based) ---------------- */
-
-function requestNotify(){
+// Alarm
+function setAlarm(h){
   if(Notification.permission!=="granted"){
     Notification.requestPermission();
   }
-}
-
-function setDailyAlarm(hour, minute, title, body){
-  requestNotify();
-  const now = new Date();
-  const t = new Date();
-  t.setHours(hour,minute,0,0);
-  if(t<now) t.setDate(t.getDate()+1);
-  const delay = t-now;
-
+  let now=new Date();
+  let alarm=new Date();
+  alarm.setHours(h,0,0,0);
+  if(alarm<now) alarm.setDate(alarm.getDate()+1);
   setTimeout(()=>{
-    notify(title,body);
-    setInterval(()=>notify(title,body), 24*60*60*1000);
-  }, delay);
+    new Notification("Yoga Reminder",{body:"Time for Yoga"});
+  },alarm-now);
+  alert("Alarm set");
 }
 
-function notify(title, body){
-  new Notification(title,{ body, icon:"icon.png" });
-  const a = new Audio("https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg");
-  a.play();
+// Logout
+function logout(){
+  localStorage.clear();
+  location.reload();
 }
-
-function setMorningAlarm(){ setDailyAlarm(6,0,"Morning Yoga","Time for morning yoga"); alert("Morning alarm set 06:00"); }
-function setEveningAlarm(){ setDailyAlarm(18,0,"Evening Yoga","Time for evening yoga"); alert("Evening alarm set 18:00"); }
-function setOnePMAlarm(){ setDailyAlarm(13,0,"Yoga Reminder","Daily yoga reminder"); alert("Reminder set 13:00"); }
