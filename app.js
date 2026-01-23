@@ -5,6 +5,12 @@ const routine = document.getElementById("routine");
 const plan = document.getElementById("plan");
 const dashboard = document.getElementById("dashboard");
 
+// Inputs (🔥 FIX HERE)
+const nameInput = document.getElementById("name");
+const ageInput = document.getElementById("age");
+const weightInput = document.getElementById("weight");
+const heightInput = document.getElementById("height");
+
 // Data
 let user = {};
 let selectedGoal = "";
@@ -17,67 +23,73 @@ function show(screen){
   screen.classList.remove("hidden");
 }
 
-// Step 1
+// STEP 1 — LOGIN
 function saveUser(){
+  if(nameInput.value.trim()===""){
+    alert("Enter name");
+    return;
+  }
+
   user = {
-    name: name.value,
-    age: age.value,
-    weight: weight.value,
-    height: height.value
+    name: nameInput.value,
+    age: ageInput.value,
+    weight: weightInput.value,
+    height: heightInput.value
   };
-  if(!user.name) return alert("Enter name");
-  localStorage.setItem("user",JSON.stringify(user));
+
+  localStorage.setItem("user", JSON.stringify(user));
   show(goal);
 }
 
-// Step 2
+// STEP 2 — GOAL
 function selectGoal(g){
   selectedGoal = g;
-  show(routine); // ✅ FIX
+  show(routine);
 }
 
-// Step 3
+// STEP 3 — MORNING / EVENING
 function selectRoutine(r){
   selectedRoutine = r;
   buildPlan();
-  show(plan); // ✅ FIX
+  show(plan);
 }
 
-// Step 4
+// STEP 4 — PLAN
 function buildPlan(){
   poses = [];
-  if(selectedRoutine==="Morning"){
+
+  if(selectedRoutine === "Morning"){
     poses = ["Surya Namaskar","Bhujangasana","Vrikshasana"];
-  }else{
+  } else {
     poses = ["Padmasana","Pranayama","Shavasana"];
   }
 
   planList.innerHTML="";
   poses.forEach(p=>{
-    let li=document.createElement("li");
-    li.innerText=p;
+    const li=document.createElement("li");
+    li.textContent=p;
     planList.appendChild(li);
   });
 }
 
-// Step 5
+// STEP 5 — DASHBOARD
 function openDashboard(){
-  welcome.innerText="Welcome "+user.name;
+  welcome.textContent = "Welcome " + user.name;
   poseList.innerHTML="";
   poses.forEach(p=>{
-    let li=document.createElement("li");
-    li.innerText=p;
+    const li=document.createElement("li");
+    li.textContent=p;
     poseList.appendChild(li);
   });
   show(dashboard);
 }
 
-// Timer
+// TIMER
 function startTimer(){
-  let sec=minutes.value*60;
-  let t=setInterval(()=>{
+  let sec = minutes.value * 60;
+  const t = setInterval(()=>{
     sec--;
-    timer.innerText=sec+" sec";
+    timer.textContent = sec + " sec";
     if(sec<=0){
       clearInterval(t);
       alert("Yoga Complete");
@@ -87,27 +99,28 @@ function startTimer(){
 
 // BMI
 function showBMI(){
-  let bmi=(user.weight/((user.height/100)**2)).toFixed(2);
-  bmiEl=bmi;
-  bmi.innerText="BMI: "+bmiEl;
+  const bmiVal = (user.weight / ((user.height/100)**2)).toFixed(2);
+  bmi.textContent = "BMI: " + bmiVal;
 }
 
-// Alarm
+// ALARM
 function setAlarm(h){
-  if(Notification.permission!=="granted"){
+  if(Notification.permission !== "granted"){
     Notification.requestPermission();
   }
-  let now=new Date();
-  let alarm=new Date();
+  const now = new Date();
+  const alarm = new Date();
   alarm.setHours(h,0,0,0);
-  if(alarm<now) alarm.setDate(alarm.getDate()+1);
+  if(alarm < now) alarm.setDate(alarm.getDate()+1);
+
   setTimeout(()=>{
     new Notification("Yoga Reminder",{body:"Time for Yoga"});
-  },alarm-now);
+  }, alarm-now);
+
   alert("Alarm set");
 }
 
-// Logout
+// LOGOUT
 function logout(){
   localStorage.clear();
   location.reload();
